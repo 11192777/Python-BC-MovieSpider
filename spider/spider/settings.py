@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'spider.spiders'
 LOG_LEVEL = "ERROR"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'spider (+http://www.yourdomain.com)'
+# USER_AGENT = 'douban (60.169.248.242)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -43,14 +43,14 @@ ROBOTSTXT_OBEY = False
 DEFAULT_REQUEST_HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': 'en',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
+    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36'
 }
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-# SPIDER_MIDDLEWARES = {
-#    'spider.middlewares.SpiderSpiderMiddleware': 543,
-# }
+SPIDER_MIDDLEWARES = {
+   'spider.middlewares.SpiderSpiderMiddleware': 543,
+}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html

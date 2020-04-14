@@ -50,6 +50,7 @@ class SpiderSpiderMiddleware(object):
 
         # Must return only requests (not items).
         for r in start_requests:
+            r.meta['proxy'] = "http://180.127.203.161"
             yield r
 
     def spider_opened(self, spider):
