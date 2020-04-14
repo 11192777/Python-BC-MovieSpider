@@ -7,7 +7,7 @@ from copy import deepcopy
 class DoubanSpider(scrapy.Spider):
     name = 'douban'
     allowed_domains = ['douban.com']
-    start_urls = ['https://sec.douban.com/b?r=https%3A%2F%2Fmovie.douban.com%2Fexplore#!type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start={}']
+    start_urls = ['https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%83%AD%E9%97%A8&sort=recommend&page_limit=20&page_start={}']
 
     # 生成目的地址列表
     def parse(self, response):
@@ -30,7 +30,7 @@ class DoubanSpider(scrapy.Spider):
             item["name"] = content["title"]
             item["href"] = content["url"]
             yield scrapy.Request(
-                url=item["href"],
+                item["href"],
                 callback=self.parse_movie_url,
                 meta={"item": deepcopy(item)}
             )
@@ -62,16 +62,15 @@ class DoubanSpider(scrapy.Spider):
             item["user_name"] = discuss.xpath('.//a[2]/text()').extract()
             item["user_url"] = discuss.xpath('.//a[1]/@href').extract()
 
-            print(item)
-
             yield scrapy.Request(
-                url= item["user_url"],
+                url=item["user_url"][0],
                 callback=self.parse_users_id,
-                meta={"item" : deepcopy(item)}
+                meta={"item": deepcopy(item)}
             )
 
     # 获取用户的真实id
     def parse_users_id(self, response):
         item = response.meta["item"]
-        print(item)
+        item["user_id"] = response.xpath('//div[@class="aside"]//div[@class="user-info"]/div').extract()
 
+        yield item

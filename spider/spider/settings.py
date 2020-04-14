@@ -16,6 +16,8 @@ NEWSPIDER_MODULE = 'spider.spiders'
 
 LOG_LEVEL = "ERROR"
 
+PROXIES = ['http://114.234.144.180','http://125.109.196.235']
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'douban (60.169.248.242)'
 
@@ -49,7 +51,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 SPIDER_MIDDLEWARES = {
-   'spider.middlewares.SpiderSpiderMiddleware': 543,
+   'spider.middlewares.SpiderProxysSetting': 543,
 }
 
 # Enable or disable downloader middlewares
