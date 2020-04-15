@@ -39,13 +39,19 @@ class DoubanSpider(scrapy.Spider):
     def parse_movie_url(self, response):
 
         item = response.meta["item"]
-        item["discuss"] = item["href"] + "reviews"
 
-        yield scrapy.Request(
-            url=item["discuss"],
-            callback=self.parse_users_discuss,
-            meta={"item": deepcopy(item)}
-        )
+        reviews = str(response.xpath('//a[@href="reviews"]/text()').extract_first())
+        length = int(reviews.split(" ")[1])
+
+
+        for index in range(0, length, 20):
+            yield scrapy.Request(
+                url=item["href"] + "/reviews?{}".format(index),
+                callback=self.parse_users_discuss,
+                meta={"item": deepcopy(item)}
+            )
+
+
 
     # 进入用户评论区
     def parse_users_discuss(self, response):
@@ -57,13 +63,13 @@ class DoubanSpider(scrapy.Spider):
         for discuss in discuss_list:
             item = {}
             item["name"] = last_item["name"]
-            item["level"] = discuss.xpath('.//span/@title').extract()
+            item["level"] = discuss.xpath('.//span/@title').extract_first()
             item["href"] = last_item["href"]
-            item["user_name"] = discuss.xpath('.//a[2]/text()').extract()
-            item["user_url"] = discuss.xpath('.//a[1]/@href').extract()
+            item["user_name"] = discuss.xpath('.//a[2]/text()').extract_first()
+            item["user_url"] = discuss.xpath('.//a[1]/@href').extract_first()
 
             yield scrapy.Request(
-                url=item["user_url"][0],
+                url=item["user_url"],
                 callback=self.parse_users_id,
                 meta={"item": deepcopy(item)}
             )
@@ -71,6 +77,6 @@ class DoubanSpider(scrapy.Spider):
     # 获取用户的真实id
     def parse_users_id(self, response):
         item = response.meta["item"]
-        item["user_id"] = response.xpath('//div[@class="aside"]//div[@class="user-info"]/div').extract()
+        item["user_id"] = response.xpath('//div[@class="aside"]//div[@class="user-info"]/div').extract_first()
 
         yield item
