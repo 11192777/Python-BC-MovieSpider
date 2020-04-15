@@ -12,5 +12,5 @@ from scrapy.utils.python import to_bytes
 
 class SpiderProxysSetting(object):
     def process_request(self, request, spider):
-        request.meta['proxy'] = 'http://125.109.199.233:80'
+        request.meta['proxy'] = 'http://58.19.83.94'
 

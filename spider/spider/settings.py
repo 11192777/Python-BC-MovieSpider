@@ -14,9 +14,7 @@ BOT_NAME = 'spider'
 SPIDER_MODULES = ['spider.spiders']
 NEWSPIDER_MODULE = 'spider.spiders'
 
-LOG_LEVEL = "ERROR"
-
-PROXIES = ['http://114.234.144.180','http://125.109.196.235']
+LOG_LEVEL = "INFO"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'douban (60.169.248.242)'

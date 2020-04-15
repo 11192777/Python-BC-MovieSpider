@@ -12,7 +12,7 @@ class DoubanSpider(scrapy.Spider):
     # 生成目的地址列表
     def parse(self, response):
 
-        for index in range(0, 40, 20):
+        for index in range(0, 2000, 20):
             start_url = self.start_urls[0].format(index)
             print(start_url)
             yield scrapy.Request(
